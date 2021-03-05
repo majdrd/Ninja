@@ -1,0 +1,25 @@
+.cell {
+    width: 64px;
+    height: 64px;
+}
+
+.parent {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.tiled-background {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.ninja {
+  position: absolute;
+  top: 0px;
+  left: 8px;
+}
+.shuriken {
+  position: absolute;
+  top: 23px;
+  left: 23px;
+}

@@ -1,0 +1,12 @@
+<div class="cell">
+    <div *ngIf="type === CELL_TYPES.NINJA" class="parent">
+        <img class="tiled-background" src="/assets/tiledbackground.png" />
+        <img class="ninja" src="/assets/ninja.png" />
+    </div>
+    <div *ngIf="type === CELL_TYPES.SHURIKEN" class="parent">
+        <img class="tiled-background" src="/assets/tiledbackground.png" />
+        <img class="shuriken" src="/assets/shuriken.png" />
+    </div>
+    <img *ngIf="type === CELL_TYPES.EMPTY" src="/assets/tiledbackground.png" alt="image">
+    <img *ngIf="type === CELL_TYPES.WALL" src="/assets/wall.png" alt="image">
+</div>
