@@ -7,6 +7,7 @@ import { CELL, INIT_NINJA_POSITION, KEY_CODE } from "../constants/app.const";
 })
 export class MazeService {
     public shurekenCounter = 0;
+    private wallCount = 0;
     get shurekenCount() {
         return this.shurekenCounter;
     }
@@ -15,6 +16,7 @@ export class MazeService {
 
     createMaze(size: number = 8) {
         let tiles: string[][] = [];
+        this.wallCount = 0;
         for (let i = 0; i < size; i++) {
             tiles[i] = [];
             for (let j = 0; j < size; j++) {
@@ -26,9 +28,15 @@ export class MazeService {
          return tiles;
     }
 
-    getRandomCell() {
+    getRandomCell(): string {
         const cellTypesArray = [CELL.SHURIKEN, CELL.EMPTY, CELL.WALL];
-        return cellTypesArray[Math.floor(Math.random() * cellTypesArray.length)];
+        if (this.wallCount > 7) {
+            cellTypesArray.pop();
+        }
+        let cell = cellTypesArray[Math.floor(Math.random() * cellTypesArray.length)];
+        this.wallCount = cell === CELL.WALL ? this.wallCount +1 : this.wallCount;
+
+        return cell;
     }
 
     moveNinja(direction: string, mazeCells: string[][], ninjaPosition: any) {
