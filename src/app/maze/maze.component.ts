@@ -36,6 +36,8 @@ export class MazeComponent implements OnInit {
   }
 
   initMaze() {
+    console.log('[MazeComponent] - initilize maze');
+
     this.store.dispatch(MazeActions.updateMaze({
       maze: this.cells,
       ninjaPosition: INIT_NINJA_POSITION
@@ -47,17 +49,21 @@ export class MazeComponent implements OnInit {
   }
 
   weHaveAWinner() {
+    console.log('[MazeComponent] - Ninja won the game!');
     const ref: DynamicDialogRef = this.dialogService.open(
       WinnerDialogComponent, {
       closable: false
     });
     ref.onClose.subscribe(c => {
+      console.log('[MazeComponent] - Ninja starting a new game.');
       this.cells = this.mazeService.createMaze(this.mazeSize);
       this.initMaze();
     });
   }
 
   move(event: string) {
+    console.log(`[MazeComponent] - Ninja is making a move by clicking ${event}.`);
+
     const { cells, position, legalMove } = this.mazeService.moveNinja(event, this.cells, this.ninjaPosition);
     if (legalMove) {
       this.cells = cells;
@@ -66,11 +72,12 @@ export class MazeComponent implements OnInit {
         ninjaPosition: position
       }));
       if (this.mazeService.shurekenCount === 0 && !this.winner) {
-        console.log('Winnner');
         this.winner = true;
         this.weHaveAWinner();
       }
+    } else {
+      console.log('[MazeComponent] - Ninja hit a wall!!!');
     }
-
   }
+
 }

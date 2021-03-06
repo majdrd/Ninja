@@ -14,6 +14,7 @@ export class WinnerDialogComponent implements OnInit {
   }
 
   close() {
+    console.log('[WinnerDialogComponent] - close dialog');
     this.ref.close();
   }
 }

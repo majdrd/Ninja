@@ -15,6 +15,7 @@ export class MazeService {
     constructor() { }
 
     createMaze(size: number = 8) {
+        console.log('[MazeService] - Creating a new maze.');
         let tiles: string[][] = [];
         this.wallCount = 0;
         for (let i = 0; i < size; i++) {
@@ -25,26 +26,28 @@ export class MazeService {
                 tiles[i][j] = cell;
             }
         }
-         return tiles;
+        return tiles;
     }
 
+    // return a random cell type,
+    // generating less walls to prevent blocking the Ninja. 
     getRandomCell(): string {
         const cellTypesArray = [CELL.SHURIKEN, CELL.EMPTY, CELL.WALL];
         if (this.wallCount > 7) {
             cellTypesArray.pop();
         }
         let cell = cellTypesArray[Math.floor(Math.random() * cellTypesArray.length)];
-        this.wallCount = cell === CELL.WALL ? this.wallCount +1 : this.wallCount;
+        this.wallCount = cell === CELL.WALL ? this.wallCount + 1 : this.wallCount;
 
         return cell;
     }
 
+    // changing the ninja position on the map according to the direction
     moveNinja(direction: string, mazeCells: string[][], ninjaPosition: any) {
         const cells = clone(mazeCells);
         const position = clone(ninjaPosition);
         let legalMove = false;
         if (direction === KEY_CODE.DOWN_ARROW && position.x < cells.length - 1 && cells[position.y][position.x + 1] !== CELL.WALL) {
-            console.log('D');
             legalMove = true;
             cells[position.y][position.x] = CELL.EMPTY;
             this.shurekenCounter = cells[position.y][position.x + 1] === CELL.SHURIKEN ?
@@ -54,7 +57,6 @@ export class MazeService {
             position.x++
         }
         if (direction === KEY_CODE.UP_ARROW && position.x > 0 && cells[position.y][position.x - 1] !== CELL.WALL) {
-            console.log('U');
             legalMove = true;
             cells[position.y][position.x] = CELL.EMPTY;
             this.shurekenCounter = cells[position.y][position.x - 1] === CELL.SHURIKEN ?
@@ -64,7 +66,6 @@ export class MazeService {
             position.x--;
         }
         if (direction === KEY_CODE.RIGHT_ARROW && position.y < cells.length - 1 && cells[position.y + 1][position.x] !== CELL.WALL) {
-            console.log('R');
             legalMove = true;
             cells[position.y][position.x] = CELL.EMPTY;
             this.shurekenCounter = cells[position.y + 1][position.x] === CELL.SHURIKEN ?
@@ -74,7 +75,6 @@ export class MazeService {
             position.y++;
         }
         if (direction === KEY_CODE.LEFT_ARROW && position.y > 0 && cells[position.y - 1][position.x] !== CELL.WALL) {
-            console.log('L');
             legalMove = true;
             cells[position.y][position.x] = CELL.EMPTY;
             this.shurekenCounter = cells[position.y - 1][position.x] === CELL.SHURIKEN ?

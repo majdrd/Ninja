@@ -9,6 +9,7 @@ export class MoveDirective {
 
   constructor() { }
 
+  // Host listner to catch keyboard arrows click events. 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (KEY_CODE_ARRAY.includes(event.code)) {
